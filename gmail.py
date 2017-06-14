@@ -43,33 +43,22 @@ def get_gmail_client():
 	return service
 
 
-def main():
-    """Shows basic usage of the Gmail API.
-
-    Creates a Gmail API service object and outputs a list of label names
-    of the user's Gmail account.
-    """
-    credentials = get_credentials()
-    http = credentials.authorize(httplib2.Http())
-    service = discovery.build('gmail', 'v1', http=http)
-
-    results = service.users().labels().list(userId='me').execute()
-    labels = results.get('labels', [])
-
-    if not labels:
-        print('No labels found.')
-    else:
-      print('Labels:')
-      for label in labels:
-        print(label['name'])
+def get_unread_email_ids(gmail_client):
+	"""
+	return list of id of unread emails
+	"""
+	response = gmail_client.users().messages().list(userId='me',q='is:unread').execute()
+	ids = [message['id'] for message in response['messages']]
+	return ids
 
 
-def get_unread_emails(host_email_address, host_email_password):
+def get_unread_email_data(gmail_client):
 	"""
 	Use gmail api to find new emails
 	Return email addresses of new emails and whether or not they have postcard
 	"""
-	pass
+	emails = gmail_client.users().messages().list(userId='me',q='is:unread').execute()
+	return emails
 
 
 def send_email(recipient_email, email_subject, email_body, host_email_address, host_email_password):
