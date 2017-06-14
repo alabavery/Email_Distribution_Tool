@@ -20,8 +20,8 @@ class StartMenu:
     def run_it(self):
         self.on_go_function(self.on_go_args)
 
-root = Tk()
 
+root = Tk()
 
 def sample_fxn(sample_args):
     print('arg1:', sample_args['arg1'])
@@ -29,7 +29,6 @@ def sample_fxn(sample_args):
     print('arg3:', sample_args['arg3'])
 
 sample_args = {'arg1': 1, 'arg2': 2, 'arg3': 3}
-
 
 menu = StartMenu(root, sample_fxn, sample_args)
 root.mainloop()
