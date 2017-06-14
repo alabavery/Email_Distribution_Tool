@@ -57,8 +57,13 @@ def get_unread_email_data(gmail_client):
 	Use gmail api to find new emails
 	Return email addresses of new emails and whether or not they have postcard
 	"""
-	emails = gmail_client.users().messages().list(userId='me',q='is:unread').execute()
-	return emails
+	unread_ids = get_unread_email_ids(gmail_client)
+
+	for message_id in unread_ids:
+		message_data = gmail_client.users().messages().get(userId='me',id=message_id).execute()
+		message_headers = message_data['payload']['headers']
+		sender = [header['value'] for header in message_headers if header['name'] == 'Return-Path'][0]
+		yield sender
 
 
 def send_email(recipient_email, email_subject, email_body, host_email_address, host_email_password):
