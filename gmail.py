@@ -6,6 +6,7 @@ from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
 
+
 def get_credentials():
     """Gets valid user credentials from storage.
 
@@ -35,6 +36,13 @@ def get_credentials():
     return credentials
 
 
+def get_gmail_client():
+	credentials = get_credentials()
+	http = credentials.authorize(httplib2.Http())
+	service = discovery.build('gmail', 'v1', http=http)
+	return service
+
+
 def main():
     """Shows basic usage of the Gmail API.
 
@@ -54,11 +62,6 @@ def main():
       print('Labels:')
       for label in labels:
         print(label['name'])
-
-
-if __name__ == '__main__':
-    main()
-
 
 
 def get_unread_emails(host_email_address, host_email_password):
