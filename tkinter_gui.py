@@ -14,9 +14,11 @@ class StartMenu:
 
         self.on_go_function = on_go_function
         self.on_go_args = on_go_args
-        self.run_processes = Button(frame, text="Run Program", command=self.on_go_function(on_go_args))
+        self.run_processes = Button(frame, text="Run Program", command=self.run_it)
         self.run_processes.pack(side=LEFT)
        
+    def run_it(self):
+        self.on_go_function(self.on_go_args)
 
 root = Tk()
 
