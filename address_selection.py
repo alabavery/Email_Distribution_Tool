@@ -13,7 +13,7 @@ def select_addresses(candidates, black_list):
 	return selection
 
 
-def get_and_update_data_for_email(all_addresses, seen_email_data, email_address, postcard_indicator):
+def get_and_update_data_for_email(all_addresses, seen_email_data, email_address):
 
 	this_emails_seen_index = [i for i,email_data in enumerate(seen_email_data) if email_data['email'] == email_address]
 
