@@ -21,15 +21,15 @@ class StartMenu:
         self.on_go_function(self.on_go_args)
 
 
-root = Tk()
+# root = Tk()
 
-def sample_fxn(sample_args):
-    print('arg1:', sample_args['arg1'])
-    print('arg2:', sample_args['arg2'])
-    print('arg3:', sample_args['arg3'])
+# def sample_fxn(sample_args):
+#     print('arg1:', sample_args['arg1'])
+#     print('arg2:', sample_args['arg2'])
+#     print('arg3:', sample_args['arg3'])
 
-sample_args = {'arg1': 1, 'arg2': 2, 'arg3': 3}
+# sample_args = {'arg1': 1, 'arg2': 2, 'arg3': 3}
 
-menu = StartMenu(root, sample_fxn, sample_args)
-root.mainloop()
-root.destroy() # optional; see description below
+# menu = StartMenu(root, sample_fxn, sample_args)
+# root.mainloop()
+# root.destroy() # optional; see description below
