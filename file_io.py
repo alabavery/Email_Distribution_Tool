@@ -13,8 +13,8 @@ def read_excel(excel_file_path):
 	"""
 	if not check_excel_altered(excel_file_path):
 		return None
-		
-	else check_excel_altered(excel_file_path):
+
+	else:
 		file = open(excel_file_path, 'r')
 		reader_ = csv.reader(file)
 		both_fields = []
