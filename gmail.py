@@ -7,7 +7,7 @@ from oauth2client import tools
 from oauth2client.file import Storage
 
 
-SCOPES = 'https://www.googleapis.com/auth/gmail.readonly'
+SCOPES = ['https://www.googleapis.com/auth/gmail.readonly','https://www.googleapis.com/auth/gmail.send']
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'CodeBlueTest'
 
@@ -16,7 +16,7 @@ try:
     flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
 except ImportError:
     flags = None
-    
+
 
 def get_credentials():
     """Gets valid user credentials from storage.
@@ -80,3 +80,7 @@ def get_unread_email_data(gmail_client):
 
 def send_email(recipient_email, email_subject, email_body, gmail_client):
 	pass
+
+
+
+
