@@ -1,11 +1,13 @@
 import httplib2
 import os
 
-from apiclient import discovery
+from apiclient import discovery, errors
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
 
+from email.mime.text import MIMEText
+import base64
 
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly','https://www.googleapis.com/auth/gmail.send']
 CLIENT_SECRET_FILE = 'client_secret.json'
@@ -94,9 +96,11 @@ def create_message(sender, to, subject, message_text):
 	message['to'] = to
 	message['from'] = sender
 	message['subject'] = subject
-	return {'raw': base64.urlsafe_b64encode(message.as_string())}
+	raw = base64.urlsafe_b64encode(message.as_bytes())
+	return {'raw':raw.decode()}
 
-def send_message(service, message):
+
+def send_message(message, service):
   """Send an email message.
 
   Args:
@@ -109,16 +113,16 @@ def send_message(service, message):
     Sent Message.
   """
   try:
-    message = (service.users().messages().send(userId='me', body=message)
-               .execute())
+    message = (service.users().messages().send(userId='me', body=message).execute())
     print('Message Id: %s' % message['id'])
     return message
-  except errors.HttpError, error:
+  except errors.HttpError as error:
     print('An error occurred: %s' % error)
 
 
-def send_email(recipient_email, email_subject, email_body, gmail_client):
-	pass
+def send_email(host_email, recipient_email, email_subject, email_body, gmail_client):
+	message = create_message(host_email, recipient_email, email_subject, email_body)
+	send_message(message, gmail_client)
 
 
 
