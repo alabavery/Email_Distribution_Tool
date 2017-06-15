@@ -11,10 +11,8 @@ postcard_indicator = 0
 email_address = 'a'
 
 
-def main():
-	# seen_email_data = file_io.read_json_seen_email(seen_email_path)
-	# all_addresses = file_io.read_json_all_addresses(all_addresses_path)
-
+def main(excel_file_path, seen_email_file_path, all_addresses_file_path):
+	existing_data = file_io.get_existing_data(excel_file_path, seen_email_file_path, all_addresses_file_path)
 	gmail_client = gmail.get_gmail_client()
 	unread_email_data = gmail.get_unread_email_data(gmail_client)
 
