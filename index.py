@@ -1,5 +1,5 @@
 #!CodeBlue/bin/python3.5
-import address_selection, file_io, gmail, tkinter_gui, config
+import address_selection, file_io, gmail, tkinter_gui
 
 SEEN_EMAIL_PATH = "json/seen_email_data.json"
 ALL_ADDRESSES_PATH = "json/all_addresses.json"
