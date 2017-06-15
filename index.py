@@ -1,9 +1,11 @@
 #!CodeBlue/bin/python3.5
 import address_selection, file_io, gmail, tkinter_gui
 
-SEEN_EMAIL_PATH = "json/seen_email_data.json"
-ALL_ADDRESSES_PATH = "json/all_addresses.json"
-EXCEL_FILE_PATH = "demo_csv.csv"
+import os
+base_path = os.path.dirname(os.path.realpath(__file__))
+SEEN_EMAIL_PATH = base_path + "/json/seen_email_data.json"
+ALL_ADDRESSES_PATH = base_path + "/json/all_addresses.json"
+EXCEL_FILE_PATH = base_path + "/demo_csv.csv"
 
 
 def main(excel_file_path, seen_email_file_path, all_addresses_file_path):
