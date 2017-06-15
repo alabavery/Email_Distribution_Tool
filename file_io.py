@@ -46,11 +46,12 @@ def read_json_file(json_file_path):
 
 
 def get_existing_data(excel_file_path, seen_email_file_path, all_addresses_file_path):
-	updated_excel = read_excel(excel_file_path)
+	updated_excel_all_addresses = read_excel(excel_file_path)
 	
-	if updated_excel:
-		return updated_excel['all_addresses'], uptodate_excel['seen_email_']
+	if updated_excel_all_addresses:
+		all_addresses = updated_excel_all_addresses
 	else:
-		seen_email_data = read_json_file(seen_email_file_path)
 		all_addresses = read_json_file(all_addresses_file_path)
-		return {'seen_email_data':seen_email_data, 'all_addresses':all_addresses}
+	
+	seen_email_data = read_json_file(seen_email_file_path)
+	return {'seen_email_data':seen_email_data, 'all_addresses':all_addresses}
