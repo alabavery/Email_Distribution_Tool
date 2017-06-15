@@ -23,7 +23,7 @@ def read_excel(excel_file_path):
 		for row in reader_:
 			if row[1] == '1':
 				if row[2] == '1':
-					both_fields_only.append(row[0])
+					both_fields.append(row[0])
 				else:
 					one_field_only.append(row[0])
 
