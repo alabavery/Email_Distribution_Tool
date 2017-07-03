@@ -35,11 +35,11 @@ def get_credentials():
         flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
         flow.user_agent = APPLICATION_NAME
 
-		try:
-		    import argparse
-		    flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
-		except ImportError:
-		    flags = None
+        try:
+            import argparse
+            flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
+        except ImportError:
+            flags = None
 
         if flags:
             credentials = tools.run_flow(flow, store, flags)
@@ -100,23 +100,23 @@ def create_message(sender, to, subject, message_text):
 
 
 def send_message(message, service):
-  """Send an email message.
+    """Send an email message.
 
-  Args:
+    Args:
     service: Authorized Gmail API service instance.
     user_id: User's email address. The special value "me"
     can be used to indicate the authenticated user.
     message: Message to be sent.
 
-  Returns:
+    Returns:
     Sent Message.
-  """
-  try:
-    message = (service.users().messages().send(userId='me', body=message).execute())
-    print('Message Id: %s' % message['id'])
-    return message
-  except errors.HttpError as error:
-    print('An error occurred: %s' % error)
+    """
+    try:
+        message = (service.users().messages().send(userId='me', body=message).execute())
+        print('Message Id: %s' % message['id'])
+        return message
+    except errors.HttpError as error:
+        print('An error occurred: %s' % error)
 
 
 def send_email(host_email, recipient_email, email_subject, email_body, gmail_client):
