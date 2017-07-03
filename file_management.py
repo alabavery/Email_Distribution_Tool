@@ -35,7 +35,7 @@ def make_data_dir(data_dir_path, json_file_name, client_secret_file_name, client
 	json_file.close()
 
 
-def ensure_data_dir_exists(data_dir_path, json_file_name):
+def ensure_data_dir_exists(data_dir_path, seen_email_file_name, client_secret_file_name, client_secret):
 	"""
 	Takes string, no return
 	More on logic -> 3rd answer at https://stackoverflow.com/questions/273192/how-can-i-create-a-directory-if-it-does-not-exist
