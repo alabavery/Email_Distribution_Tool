@@ -3,8 +3,8 @@ import glob
 import json
 
 
-def get_csv_file_path(data_dir_path):
-	"""Takes string, returns string"""
+def prompt_user_to_save_csv(data_dir_path):
+	# no return
 	csv_file_list = []
 	while True:
 		csv_file_list = glob.glob(data_dir_path + '/*.csv')
@@ -16,7 +16,10 @@ def get_csv_file_path(data_dir_path):
 		print("Please save file as a '.csv' to " + data_dir_path + "/ before continuing.")
 		input("Press ENTER when you have saved the file...")
 
-	return csv_file_list[0]
+
+def get_csv_file_path(data_dir_path):
+	# must be sure that this will not be run before success of prompt_user_to_save_csv()
+	return glob.glob(data_dir_path + '/*.csv')[0]
 
 
 def get_json_file_path(data_dir_path, json_file_name):
@@ -43,7 +46,8 @@ def ensure_data_exists(data_dir_path, seen_email_file_name, client_secret_file_n
 	try: 
 	    os.makedirs(data_dir_path)
 	    print("Created folder at " + data_dir_path)
-	    make_data_dir(data_dir_path, json_file_name, client_secret_file_name, client_secret)
+	    make_data_dir(data_dir_path, seen_email_file_name, client_secret_file_name, client_secret)
+	    prompt_user_to_save_csv(data_dir_path)
 
 	except OSError: # will get OSError if the dir exists, if you don't have permissions, or other cases
 	    if not os.path.isdir(data_dir_path): # only pay attention to the error if it is NOT due to the dir existing already
