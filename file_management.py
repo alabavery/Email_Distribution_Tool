@@ -26,19 +26,14 @@ def get_json_file_path(data_dir_path, json_file_name):
 	return os.path.join(data_dir_path, json_file_name)
 
 
-def make_data_dir(data_dir_path, json_file_name, client_secret_file_name, client_secret):
+def make_data_dir(data_dir_path, json_file_name):
 	json_file = open(get_json_file_path(data_dir_path, json_file_name),'w')
 	json_data = json.dumps([])
 	json_file.write(json_data)
 	json_file.close()
 
-	json_file = open(get_json_file_path(data_dir_path, client_secret_file_name),'w')
-	json_data = json.dumps(client_secret)
-	json_file.write(json_data)
-	json_file.close()
 
-
-def ensure_data_exists(data_dir_path, seen_email_file_name, client_secret_file_name, client_secret):
+def ensure_data_exists(data_dir_path, seen_email_file_name):
 	"""
 	Takes string, no return
 	More on logic -> 3rd answer at https://stackoverflow.com/questions/273192/how-can-i-create-a-directory-if-it-does-not-exist
@@ -46,7 +41,7 @@ def ensure_data_exists(data_dir_path, seen_email_file_name, client_secret_file_n
 	try: 
 	    os.makedirs(data_dir_path)
 	    print("Created folder at " + data_dir_path)
-	    make_data_dir(data_dir_path, seen_email_file_name, client_secret_file_name, client_secret)
+	    make_data_dir(data_dir_path, seen_email_file_name)
 	    prompt_user_to_save_csv(data_dir_path)
 
 	except OSError: # will get OSError if the dir exists, if you don't have permissions, or other cases
