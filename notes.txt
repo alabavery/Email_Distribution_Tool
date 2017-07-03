@@ -1,0 +1,35 @@
+-------------------- PROJECT DESCRIPTION ------------------------
+This bot would be working with an Excel spreadsheet, or an Access database if necessary. 
+The spreadsheet is a list of addresses with a couple of fields that are marked empty or 1. 
+The bot would upon receiving an email (or form submission or whatever works best: A. search the addresses for those that have both fields marked 1. 
+B. choose 10 of them. 
+C. reply to the request with those 10 addresses. 
+D. do this for multiple requests without repeating addresses. 
+E. upon receiving a photograph of postcards (probably just recognizing the file type, not getting into photo recognition) from someone who has already received 10 addresses, would generate 10 more.
+
+
+-------------------- OUTSTANDING QUESTIONS ------------------------
+1. What do to when address has received all of addresses from both fields and one field?
+2. What does 'generate' a new address mean?  How is this different than just sending address?
+3. What action to take if someone who has not yet received any addresses sends postcard?
+4. Ballpark estimate of emails it will need to receive/send?
+5. Will it always be run on Windows?
+
+
+-------------------- END-USER INSTRUCTIONS ------------------------
+1. Download
+2. Installation process?
+3. Double-click icon
+4. Settings? -> need to know where Excel file is
+5. Run
+6. First-time you run, your browser should open, and you will be asked to log in to email and authorize app
+7. After you authorize, program runs
+
+
+-------------------- GENERAL NOTES --------------------------------
+- To execute index.py, had to add shebang, run command chmod a+x index.py, and use the command ./index.py rather than index.py
+- If you use config.py file, will need to make sure it's in there...
+- Need to make sure that client_secret.json makes it to user
+- 
+
+
