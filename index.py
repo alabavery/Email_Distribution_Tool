@@ -1,31 +1,28 @@
-#!CodeBlue/bin/python3.5
-import address_selection, file_io, gmail, tkinter_gui
-
 import os
+
+import file_management
+import file_io
+import address_selection
+import gmail
+import config
+
+
 base_path = os.path.dirname(os.path.realpath(__file__))
-SEEN_EMAIL_PATH = base_path + "/json/seen_email_data.json"
-ALL_ADDRESSES_PATH = base_path + "/json/all_addresses.json"
-EXCEL_FILE_PATH = base_path + "/demo_csv.csv"
+data_dir_path = os.path.join(base_path, config.DATA_DIR_NAME)
+file_management.ensure_data_dir_exists(data_dir_path, config.JSON_FILE_NAME)
+csv_file_path = file_management.get_csv_file_path(data_dir_path)
+json_file_path = os.path.join(data_dir_path, config.JSON_FILE_NAME)
+
+all_addresses = file_io.get_csv_addresses(csv_file_path)
+both_fields_addresses = all_addresses['both_fields']
+one_field_addresses = all_addresses['one_field_only']
+seen_email_data = file_io.get_seen_email_data(json_file_path)
 
 
-def main(excel_file_path, seen_email_file_path, all_addresses_file_path):
-	existing_data = file_io.get_existing_data(excel_file_path, seen_email_file_path, all_addresses_file_path)
-	gmail_client = gmail.get_gmail_client()
-	unread_email_data = gmail.get_unread_email_data(gmail_client)
+new_email_data = [('a',1),('b',0),('c',0),('d',0)]
+for email in new_email_data:
+	print(address_selection.get_and_update_data_for_email(all_addresses, seen_email_data, email[0]))
 
-	for sender in unread_email_data:
-		d = address_selection.get_and_update_data_for_email(existing_data['all_addresses'], existing_data['seen_email_data'], sender)
-		#gmail.send_email(d, gmail_client)
-
-	file_io.write_json_file(existing_data['all_addresses'],all_addresses_file_path)
-	file_io.write_json_file(existing_data['seen_email_data'],seen_email_file_path)
+file_io.write_seen_email_data(json_file_path, seen_email_data)
 
 
-main(EXCEL_FILE_PATH, SEEN_EMAIL_PATH, ALL_ADDRESSES_PATH)
-# root = tkinter.Tk()
-# gui = tkinter_gui.StartMenu(root, on_go_function, on_go_parameters)
-# root.mainloop()
-# root.destroy() # optional; see description below
-
-
-	
