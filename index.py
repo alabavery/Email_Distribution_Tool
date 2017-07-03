@@ -16,13 +16,16 @@ client_secret = config.CLIENT_SECRET
 file_management.ensure_data_exists(data_dir_path, config.SEEN_EMAIL_FILE_NAME, config.CLIENT_SECRET_FILE_NAME, config.CLIENT_SECRET)
 csv_file_path = file_management.get_csv_file_path(data_dir_path)
 
-print(gmail.get_gmail_client(data_dir_path, client_secret_file_path, config.SCOPES, config.APPLICATION_NAME))
-
 # all_addresses = file_io.get_csv_addresses(csv_file_path)
 # both_fields_addresses = all_addresses['both_fields']
 # one_field_addresses = all_addresses['one_field_only']
 # seen_email_data = file_io.get_seen_email_data(seen_email_file_path)
 
+
+gmail_client = gmail.get_gmail_client(data_dir_path, client_secret_file_path, config.SCOPES, config.APPLICATION_NAME)
+new_email_data = gmail.get_unread_email_data(gmail_client)
+for e in new_email_data:
+	print(e)
 
 # new_email_data = [('a',1),('b',0),('c',0),('d',0)]
 # for email in new_email_data:
