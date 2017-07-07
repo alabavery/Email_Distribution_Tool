@@ -128,7 +128,9 @@ def send_addresses(sender, to, subject, addresses, intro_text, client):
     send_message(message, client)
 
 
-
+def send_rejection(sender, to, subject, text, client):
+    message = create_message(sender, to, subject, text)
+    send_message(message, client)
 
 
 
