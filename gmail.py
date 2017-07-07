@@ -75,14 +75,11 @@ def get_unread_email_data(gmail_client):
     for message_id in unread_ids:
         message_data = gmail_client.users().messages().get(userId='me',id=message_id).execute()
         message_payload = message_data['payload']
-        # attachment, if it exists, should be item in the list found at message_payload['parts']
-        # it will be a dict with a key 'mimeType' with value 'image/jpeg'
-        # potentially other values for this?
-        # if no attachment, that item will not be in message_payload['parts']
+        has_attachment = 0 < len([part for part in message_payload['parts'] if part['mimeType'] == 'image/jpeg'])
         
         message_headers = message_payload['headers']
         sender = [header['value'] for header in message_headers if header['name'] == 'Return-Path'][0]
-        yield sender
+        yield sender, has_attachment
 
 
 def create_message(sender, to, subject, message_text):
