@@ -102,11 +102,11 @@ def create_message(sender, to, subject, message_text):
     return {'raw':raw.decode()}
 
 
-def send_message(message, service):
+def send_message(message, client):
     """Send an email message.
 
     Args:
-    service: Authorized Gmail API service instance.
+    client: Authorized Gmail API service instance.
     user_id: User's email address. The special value "me"
     can be used to indicate the authenticated user.
     message: Message to be sent.
@@ -115,11 +115,22 @@ def send_message(message, service):
     Sent Message.
     """
     try:
-        message = (service.users().messages().send(userId='me', body=message).execute())
+        message = (client.users().messages().send(userId='me', body=message).execute())
         print('Message Id: %s' % message['id'])
         return message
     except errors.HttpError as error:
         print('An error occurred: %s' % error)
+
+
+def send_addresses(sender, to, subject, addresses, intro_text, client):
+    message_text = intro_text + '\n\n' + str(addresses)
+    message = create_message(sender, to, subject, message_text)
+    send_message(message, client)
+
+
+
+
+
 
 
 def send_email(host_email, recipient_email, email_subject, email_body, gmail_client):
