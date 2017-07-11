@@ -10,7 +10,7 @@ def get_and_update_data_for_email(all_addresses, seen_email_data, email_address,
 	email_address_seen_before = len(this_emails_seen_index) == 1
 
 	if email_address_seen_before and not attachment:
-		print("Sender " + seen_email_data[this_emails_seen_index[0]] + " previously requested and has not included attachment.")
+		print("Sender " + seen_email_data[this_emails_seen_index[0]]['email'] + " previously requested and has not included attachment.")
 		return False
 
 	else:
