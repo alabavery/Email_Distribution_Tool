@@ -61,8 +61,12 @@ def get_unread_email_ids(gmail_client):
     return list of id of unread emails
     """
     response = gmail_client.users().messages().list(userId='me',q='is:unread').execute()
-    ids = [message['id'] for message in response['messages']]
-    return ids
+
+    if 'messages' in response: # messages key only exists if there are unread messages
+        return [message['id'] for message in response['messages']]
+    else:
+        print("No unread messages...")
+        return [] # still return a list since that's what caller expects
 
 
 def get_unread_email_data(gmail_client):
@@ -83,6 +87,7 @@ def get_unread_email_data(gmail_client):
         message_headers = message_payload['headers']
         sender = [header['value'] for header in message_headers if header['name'] == 'Return-Path'][0]
         yield sender, has_attachment
+
 
 
 def create_message(sender, to, subject, message_text):
