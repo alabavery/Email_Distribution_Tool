@@ -73,6 +73,9 @@ def get_unread_email_data(gmail_client):
     unread_ids = get_unread_email_ids(gmail_client)
 
     for message_id in unread_ids:
+        remove_unread_label = {'removeLabelIds': ['UNREAD']}
+        gmail_client.users().messages().modify(userId='me', id=message_id, body=remove_unread_label).execute()
+
         message_data = gmail_client.users().messages().get(userId='me',id=message_id).execute()
         message_payload = message_data['payload']
         has_attachment = 0 < len([part for part in message_payload['parts'] if part['mimeType'] == 'image/jpeg'])
