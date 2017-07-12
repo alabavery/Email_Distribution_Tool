@@ -20,17 +20,17 @@ def get_csv_addresses(csv_file_path):
 	return {'both_fields':both_fields, 'one_field_only':one_field_only}
 
 
-def get_seen_email_data(json_file_path):
+def get_json_data(json_file_path):
 	file = open(json_file_path, 'r')
 	data = json.loads(file.read())
 	file.close()
 	return data
 
 
-def write_seen_email_data(json_file_path, seen_email_data):
-	seen_email_json = json.dumps(seen_email_data)
+def write_json_data(json_file_path, data):
+	data_json = json.dumps(data)
 	json_file = open(json_file_path, 'w')
-	json_file.write(seen_email_json)
+	json_file.write(data_json)
 	json_file.close()
 
 
