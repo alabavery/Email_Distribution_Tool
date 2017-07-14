@@ -32,5 +32,3 @@ def write_json_data(json_file_path, data):
 	json_file = open(json_file_path, 'w')
 	json_file.write(data_json)
 	json_file.close()
-
-
