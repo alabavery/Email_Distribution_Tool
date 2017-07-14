@@ -50,9 +50,7 @@ def ensure_data_exists(data_dir_path, all_addresses_file_name, seen_email_file_n
 	    os.makedirs(data_dir_path)
 	    print("Created folder at " + data_dir_path)
 	   	fill_data_dir(data_dir_path, all_addresses_file_name, seen_email_file_name, client_secret_file_name, client_secret)
-	    return False
 
 	except OSError: # will get OSError if the dir exists, if you don't have permissions, or other cases
 	    if not os.path.isdir(data_dir_path): # only pay attention to the error if it is NOT due to the dir existing already
 	        raise # make sure you know what happens if you don't have permissions so you can troubleshoot if that comes up
-	    return True
