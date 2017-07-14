@@ -1,5 +1,5 @@
 
-def get_and_update_data_for_email(all_addresses, seen_email_data, email_address, attachment):
+def get_and_update_data_for_email(unused_addresses, used_addresses, seen_email_data, email_address, attachment):
 	"""
 	all_addresses: dict of ['both_fields'] = [], ['one_field_only'] = []
 	seen_email_data: list of {'email':'', 'both_fields': [], 'one_field_only': []}
@@ -14,8 +14,8 @@ def get_and_update_data_for_email(all_addresses, seen_email_data, email_address,
 		return False
 
 	else:
-		selection = all_addresses['both_fields'][-10:]
-		del all_addresses['both_fields'][-10:]
+		selection = unused_addresses['both_fields'][-10:]
+		del unused_addresses['both_fields'][-10:]
 
 		if email_address_seen_before:
 			seen_email_data[this_emails_seen_index[0]]['both_fields'].extend(selection)
@@ -23,4 +23,5 @@ def get_and_update_data_for_email(all_addresses, seen_email_data, email_address,
 			new_entry = {'email': email_address, 'one_field_only': [], 'both_fields': selection}
 			seen_email_data.append(new_entry)
 
+		used_addresses['both_fields'].extend(selection)
 		return selection
