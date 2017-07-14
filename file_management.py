@@ -2,6 +2,7 @@ import os
 import glob
 import json
 
+import file_io
 
 def prompt_user_to_save_csv(data_dir_path):
 	# no return
@@ -22,23 +23,25 @@ def get_csv_file_path(data_dir_path):
 	return glob.glob(data_dir_path + '/*.csv')[0]
 
 
-def get_json_file_path(data_dir_path, json_file_name):
-	return os.path.join(data_dir_path, json_file_name)
+def copy_csv_to_all_addresses_json_file(all_addresses_file_path):
+	csv_file_path = get_csv_file_path(data_dir_path)
+	csv_addresses = file_io.get_csv_addresses(csv_file_path)
+	all_addresses = {'used': {'both_fields': [], 'one_field_only': []}, 'unused': csv_addresses}
+	file_io.write_json_data(all_addresses_file_path, all_addresses)
 
 
-def make_data_dir(data_dir_path, json_file_name, client_secret_file_name, client_secret):
-	json_file = open(get_json_file_path(data_dir_path, json_file_name),'w')
-	json_data = json.dumps([])
-	json_file.write(json_data)
-	json_file.close()
+def fill_data_dir(data_dir_path, 
+				all_addresses_file_name, 
+				seen_email_file_name, 
+				client_secret_file_name, 
+				client_secret):
+	prompt_user_to_save_csv(data_dir_path)
+	copy_csv_to_all_addresses_json_file(os.path.join(data_dir_path, all_addresses_file_name))
+	file_io.write_json_data(seen_email_file_path, []) # make seen email file containing only empty list json
+	file_io.write_json_data(client_secret_file_path, client_secret)
 
-	json_file = open(get_json_file_path(data_dir_path, client_secret_file_name),'w')
-	json_data = json.dumps(client_secret)
-	json_file.write(json_data)
-	json_file.close()
 
-
-def ensure_data_exists(data_dir_path, seen_email_file_name, client_secret_file_name, client_secret):
+def ensure_data_exists(data_dir_path, all_addresses_file_name, seen_email_file_name, client_secret_file_name, client_secret):
 	"""
 	Takes string, no return
 	More on logic -> 3rd answer at https://stackoverflow.com/questions/273192/how-can-i-create-a-directory-if-it-does-not-exist
@@ -46,8 +49,7 @@ def ensure_data_exists(data_dir_path, seen_email_file_name, client_secret_file_n
 	try: 
 	    os.makedirs(data_dir_path)
 	    print("Created folder at " + data_dir_path)
-	    make_data_dir(data_dir_path, seen_email_file_name, client_secret_file_name, client_secret)
-	    prompt_user_to_save_csv(data_dir_path)
+	   	fill_data_dir(data_dir_path, all_addresses_file_name, seen_email_file_name, client_secret_file_name, client_secret)
 	    return False
 
 	except OSError: # will get OSError if the dir exists, if you don't have permissions, or other cases
