@@ -23,21 +23,22 @@ def get_csv_file_path(data_dir_path):
 	return glob.glob(data_dir_path + '/*.csv')[0]
 
 
-def copy_csv_to_all_addresses_json_file(all_addresses_file_path):
+def copy_csv_to_all_addresses_json_file(data_dir_path, all_addresses_file_path):
 	csv_file_path = get_csv_file_path(data_dir_path)
 	csv_addresses = file_io.get_csv_addresses(csv_file_path)
 	all_addresses = {'used': {'both_fields': [], 'one_field_only': []}, 'unused': csv_addresses}
 	file_io.write_json_data(all_addresses_file_path, all_addresses)
 
 
-def fill_data_dir(data_dir_path, 
-				all_addresses_file_name, 
-				seen_email_file_name, 
-				client_secret_file_name, 
-				client_secret):
+def fill_data_dir(data_dir_path, all_addresses_file_name, seen_email_file_name, client_secret_file_name, client_secret):
 	prompt_user_to_save_csv(data_dir_path)
-	copy_csv_to_all_addresses_json_file(os.path.join(data_dir_path, all_addresses_file_name))
+	all_addresses_file_path = os.path.join(data_dir_path, all_addresses_file_name)
+	copy_csv_to_all_addresses_json_file(data_dir_path, all_addresses_file_path)
+
+	seen_email_file_path = os.path.join(data_dir_path, seen_email_file_name)
 	file_io.write_json_data(seen_email_file_path, []) # make seen email file containing only empty list json
+
+	client_secret_file_path = os.path.join(data_dir_path, client_secret_file_name)
 	file_io.write_json_data(client_secret_file_path, client_secret)
 
 
@@ -47,9 +48,9 @@ def ensure_data_exists(data_dir_path, all_addresses_file_name, seen_email_file_n
 	More on logic -> 3rd answer at https://stackoverflow.com/questions/273192/how-can-i-create-a-directory-if-it-does-not-exist
 	"""
 	try: 
-	    os.makedirs(data_dir_path)
-	    print("Created folder at " + data_dir_path)
-	   	fill_data_dir(data_dir_path, all_addresses_file_name, seen_email_file_name, client_secret_file_name, client_secret)
+		os.makedirs(data_dir_path)
+		print("Created folder at " + data_dir_path)
+		fill_data_dir(data_dir_path, all_addresses_file_name, seen_email_file_name, client_secret_file_name, client_secret)
 
 	except OSError: # will get OSError if the dir exists, if you don't have permissions, or other cases
 	    if not os.path.isdir(data_dir_path): # only pay attention to the error if it is NOT due to the dir existing already
